@@ -1,0 +1,53 @@
+version: '3'
+services:
+  app:
+    build: .
+    container_name: app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    env_file:
+      - ./config/.env.develop
+    depends_on:
+      - mongo
+      - mysql
+      - redis
+    links:
+      - mongo
+      - mysql
+      - redis
+    command: yarn dev
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    command: mongod
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    env_file:
+      - ./config/.env.develop
+
+  redis:
+    image: redis:6.2
+    container_name: redis
+    command: ['redis-server', '--bind', 'redis', '--port', '6379']
+    volumes:
+      - red_data:/var/lib/redis
+    ports:
+      - 6379:6379
+
+volumes:
+  mongo_data: {}
+  mysql_data: {}
+  red_data: {}
