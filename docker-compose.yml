@@ -10,23 +10,12 @@ services:
     env_file:
       - ./config/.env.develop
     depends_on:
-      - mongo
       - mysql
       - redis
     links:
-      - mongo
       - mysql
       - redis
     command: yarn dev
-
-  mongo:
-    image: mongo:4.4
-    container_name: mongo
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo_data:/data/db
-    command: mongod
 
   mysql:
     image: mysql:8.0
@@ -48,6 +37,5 @@ services:
       - 6379:6379
 
 volumes:
-  mongo_data: {}
   mysql_data: {}
   red_data: {}
