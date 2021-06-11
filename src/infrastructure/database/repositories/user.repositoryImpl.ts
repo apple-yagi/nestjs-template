@@ -1,48 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { User as UserEntity } from 'domain/entities/user.entity';
+import { User } from 'domain/models/user';
 import { UserRepository } from 'domain/repositories/user.repository';
-import { Connection, SelectQueryBuilder } from 'typeorm';
-import { User as UserModel } from '../models/user.model';
+import { UserEntity } from '../entities/user.entity';
+import { BaseRepositoryImpl } from './base.repositoryImpl';
 
 @Injectable()
-export class UserRepositoryImpl implements UserRepository {
-  private queryBuilder: SelectQueryBuilder<any>;
-
-  constructor(private connection: Connection) {
-    this.queryBuilder = connection.createQueryBuilder();
+export class UserRepositoryImpl extends BaseRepositoryImpl
+  implements UserRepository {
+  findAll(): Promise<User[]> {
+    return this.manager.find(UserEntity);
   }
 
-  async findAll(): Promise<UserEntity[]> {
-    const userModels = await this.queryBuilder
-      .select('user')
-      .from(UserModel, 'user')
-      .leftJoin('user.tasks', 'task')
-      .getMany();
+  async findById(id: string): Promise<User | null> {
+    const userEntity = await this.manager.findOne(UserEntity, id, {
+      relations: ['posts'],
+    });
 
-    console.log(userModels);
-    return userModels.map(um => um.toUserEntity());
+    if (!userEntity) return null;
+
+    return userEntity;
   }
 
-  async findById(id: string): Promise<UserEntity | null> {
-    const userModel = await this.queryBuilder
-      .select('user')
-      .from(UserModel, 'user')
-      .leftJoin('post.userId', 'user.id')
-      .where('user.id = :id', { id: id })
-      .getOne();
-
-    if (!userModel) return null;
-
-    return userModel.toUserEntity();
-  }
-
-  async create(user: UserEntity): Promise<UserEntity> {
-    const userModel = await this.queryBuilder
+  async create(user: User): Promise<User> {
+    const insertResult = await this.queryBuilder
       .insert()
-      .into(UserModel)
+      .into(UserEntity)
       .values(user)
       .execute();
 
-    return userModel.generatedMaps[0] as UserEntity;
+    return insertResult.generatedMaps[0] as User;
   }
 }

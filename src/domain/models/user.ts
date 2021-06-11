@@ -1,4 +1,4 @@
-import { Task } from './task.entity';
+import { Post } from './post';
 
 export class User {
   readonly id?: string;
@@ -11,7 +11,7 @@ export class User {
 
   readonly updatedAt?: Date;
 
-  readonly tasks?: Task[];
+  readonly posts?: Post[];
 
   constructor({
     id,
@@ -19,20 +19,20 @@ export class User {
     email,
     createdAt,
     updatedAt,
-    tasks,
+    posts,
   }: {
     id?: string;
     name: string;
     email: string;
     createdAt?: Date;
     updatedAt?: Date;
-    tasks?: Task[];
+    posts?: Post[];
   }) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.tasks = tasks;
+    this.posts = posts;
   }
 }

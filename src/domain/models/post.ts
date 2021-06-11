@@ -1,13 +1,11 @@
-import { User } from './user.entity';
+import { User } from './user';
 
-export class Task {
+export class Post {
   readonly id?: string;
 
   readonly title: string;
 
   readonly description: string;
-
-  readonly done?: boolean;
 
   readonly userId?: string;
 
@@ -21,7 +19,6 @@ export class Task {
     id,
     title,
     description,
-    done,
     userId,
     createdAt,
     updatedAt,
@@ -30,7 +27,6 @@ export class Task {
     id?: string;
     title: string;
     description: string;
-    done?: boolean;
     userId?: string;
     createdAt?: Date;
     updatedAt?: Date;
@@ -39,7 +35,6 @@ export class Task {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.done = done;
     this.userId = userId;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;

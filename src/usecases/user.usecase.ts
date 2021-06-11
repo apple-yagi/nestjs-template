@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { User } from 'domain/entities/user.entity';
+import { User } from 'domain/models/user';
 import { UserRepository } from 'domain/repositories/user.repository';
 
 @Injectable()
-export class UserUseCase {
-  private readonly logger = new Logger(UserUseCase.name);
+export class UserUsecase {
+  private readonly logger = new Logger(UserUsecase.name);
 
   constructor(
     @Inject('UserRepository') private readonly userRepository: UserRepository,

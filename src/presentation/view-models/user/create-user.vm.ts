@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
 
-import { User } from 'domain/entities/user.entity';
+import { User } from 'domain/models/user';
 
 export class CreateUserVM {
   @IsString()
@@ -21,7 +21,7 @@ export class CreateUserVM {
   })
   email: string;
 
-  static toUserEntity(vm: CreateUserVM): User {
+  static formViewModel(vm: CreateUserVM): User {
     return new User({
       name: vm.name,
       email: vm.email,
