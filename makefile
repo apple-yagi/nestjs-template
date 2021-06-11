@@ -5,5 +5,5 @@ up:
 down:
 	docker-compose down
 restart:
-	@make up
 	@make down
+	@make up
