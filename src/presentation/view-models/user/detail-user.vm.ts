@@ -28,6 +28,7 @@ export class DetailUserVM {
   @Expose()
   @ApiProperty({
     description: 'The posts of the user',
+    type: [PostVM],
   })
   posts: PostVM[];
 

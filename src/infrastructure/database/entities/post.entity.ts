@@ -33,7 +33,7 @@ export class PostEntity {
 
   @ManyToOne(
     () => UserEntity,
-    user => user.tasks,
+    user => user.posts,
   )
   @JoinColumn({ name: 'userId' })
   readonly user?: UserEntity;

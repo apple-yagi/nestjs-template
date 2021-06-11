@@ -13,7 +13,7 @@ async function bootstrap() {
     cors: true,
   });
 
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('/api/v1');
 
   const configService = app.get(ConfigService);
   Logger.log(
@@ -41,7 +41,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  SwaggerModule.setup('/', app, document);
 
   await app.listen(3000);
 
