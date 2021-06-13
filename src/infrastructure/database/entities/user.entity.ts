@@ -1,3 +1,4 @@
+import { User } from 'domain/models/user';
 import {
   Column,
   Entity,
@@ -33,4 +34,12 @@ export class UserEntity {
     { cascade: true },
   )
   posts: PostEntity[];
+
+  static toUser(userEntity: UserEntity): User {
+    const posts = userEntity.posts
+      ? userEntity.posts.map(postEntity => PostEntity.toPost(postEntity))
+      : [];
+
+    return new User({ ...userEntity, posts: posts });
+  }
 }

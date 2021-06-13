@@ -7,8 +7,12 @@ import { BaseRepositoryImpl } from './base.repositoryImpl';
 @Injectable()
 export class PostRepositoryImpl extends BaseRepositoryImpl
   implements PostRepository {
-  findAll(): Promise<Post[]> {
-    return this.manager.find(PostEntity);
+  async findAll(): Promise<Post[]> {
+    const postEntities = await this.manager.find(PostEntity, {
+      relations: ['user'],
+    });
+
+    return postEntities.map(postEntity => PostEntity.toPost(postEntity));
   }
 
   async findById(id: string): Promise<Post | null> {
@@ -18,7 +22,7 @@ export class PostRepositoryImpl extends BaseRepositoryImpl
 
     if (!postEntity) return null;
 
-    return postEntity;
+    return PostEntity.toPost(postEntity);
   }
 
   async create(post: Post): Promise<Post> {
@@ -28,6 +32,6 @@ export class PostRepositoryImpl extends BaseRepositoryImpl
       .values(post)
       .execute();
 
-    return insertResult.generatedMaps[0] as Post;
+    return PostEntity.toPost(insertResult.generatedMaps[0] as PostEntity);
   }
 }

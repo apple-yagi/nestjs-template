@@ -5,7 +5,7 @@ export class Post {
 
   readonly title: string;
 
-  readonly description: string;
+  readonly body: string;
 
   readonly userId?: string;
 
@@ -18,7 +18,7 @@ export class Post {
   constructor({
     id,
     title,
-    description,
+    body,
     userId,
     createdAt,
     updatedAt,
@@ -26,7 +26,7 @@ export class Post {
   }: {
     id?: string;
     title: string;
-    description: string;
+    body: string;
     userId?: string;
     createdAt?: Date;
     updatedAt?: Date;
@@ -34,7 +34,7 @@ export class Post {
   }) {
     this.id = id;
     this.title = title;
-    this.description = description;
+    this.body = body;
     this.userId = userId;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;

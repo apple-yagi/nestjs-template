@@ -11,9 +11,11 @@ services:
       - ./config/.env.develop
     depends_on:
       - mysql
+      - mysql-test
       - redis
     links:
       - mysql
+      - mysql-test
       - redis
     command: yarn dev
 
@@ -26,6 +28,17 @@ services:
       - 3306:3306
     env_file:
       - ./config/.env.develop
+
+  mysql-test:
+    image: mysql:8.0
+    container_name: mysql_test
+    environment:
+      MYSQL_ROOT_PASSWORD: 'pass'
+      MYSQL_USER: 'testuser'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_DATABASE: mydb_test
+    ports:
+      - '3307:3306'
 
   redis:
     image: redis:6.2

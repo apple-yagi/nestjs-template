@@ -7,8 +7,10 @@ import { BaseRepositoryImpl } from './base.repositoryImpl';
 @Injectable()
 export class UserRepositoryImpl extends BaseRepositoryImpl
   implements UserRepository {
-  findAll(): Promise<User[]> {
-    return this.manager.find(UserEntity);
+  async findAll(): Promise<User[]> {
+    const userEntities = await this.manager.find(UserEntity);
+
+    return userEntities.map(userEntity => UserEntity.toUser(userEntity));
   }
 
   async findById(id: string): Promise<User | null> {
@@ -18,7 +20,7 @@ export class UserRepositoryImpl extends BaseRepositoryImpl
 
     if (!userEntity) return null;
 
-    return userEntity;
+    return UserEntity.toUser(userEntity);
   }
 
   async create(user: User): Promise<User> {
@@ -28,6 +30,6 @@ export class UserRepositoryImpl extends BaseRepositoryImpl
       .values(user)
       .execute();
 
-    return insertResult.generatedMaps[0] as User;
+    return UserEntity.toUser(insertResult.generatedMaps[0] as UserEntity);
   }
 }

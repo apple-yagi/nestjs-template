@@ -20,10 +20,10 @@ export class DetailPostVM {
 
   @Expose()
   @ApiProperty({
-    description: 'The description of the post',
-    example: 'This is description.',
+    description: 'The body of the post',
+    example: 'This is body.',
   })
-  description: string;
+  body: string;
 
   @Expose()
   @ApiProperty({

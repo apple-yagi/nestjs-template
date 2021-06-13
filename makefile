@@ -13,3 +13,10 @@ restart:
 	@make up
 migrate:
 	docker exec app yarn migration
+migrate-test:
+	docker exec app yarn migration:test
+migrate-all:
+	@make migrate
+	@make migrate-test
+unit-test:
+	docker exec app yarn test

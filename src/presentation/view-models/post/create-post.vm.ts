@@ -14,10 +14,10 @@ export class CreatePostVM {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    description: 'The description of the post',
-    example: 'This is description.',
+    description: 'The body of the post',
+    example: 'This is body.',
   })
-  description: string;
+  body: string;
 
   @IsNotEmpty()
   @ApiProperty({
@@ -29,7 +29,7 @@ export class CreatePostVM {
   static formViewModel(vm: CreatePostVM): Post {
     return new Post({
       title: vm.title,
-      description: vm.description,
+      body: vm.body,
       userId: vm.userId,
     });
   }

@@ -1,3 +1,4 @@
+import { Post } from 'domain/models/post';
 import {
   Column,
   CreateDateColumn,
@@ -20,7 +21,7 @@ export class PostEntity {
   title: string;
 
   @Column()
-  description: string;
+  body: string;
 
   @Column()
   userId: string;
@@ -37,4 +38,9 @@ export class PostEntity {
   )
   @JoinColumn({ name: 'userId' })
   readonly user?: UserEntity;
+
+  static toPost(postEntity: PostEntity): Post {
+    const user = postEntity.user ?? UserEntity.toUser(postEntity.user);
+    return new Post({ ...postEntity, user: user });
+  }
 }
