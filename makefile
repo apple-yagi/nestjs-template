@@ -1,7 +1,7 @@
 init:
 	@make build
 	@make up
-	@make migrate
+	@make migrate-all
 build:
 	docker-compose build
 up:
