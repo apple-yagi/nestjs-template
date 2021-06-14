@@ -4,7 +4,7 @@
 
 # Nestjs template
 
-Nest.js,MySQL,MongoDB,Redis のテンプレート
+Nest.js,MySQL,Redis のテンプレート
 
 # Dependency
 
@@ -12,6 +12,47 @@ Nest.js,MySQL,MongoDB,Redis のテンプレート
 - TypeScript v3.7.4
 - MySQL v8.0
 - TypeORM v0.2.34
-- MongoDB v4.4
-- Mongoose v5.12.13
 - Redis v.6.2
+
+# Directory structure
+
+```
+nest-template
+  ├── Dockerfile
+  ├── README.md
+  ├── config
+  ├── docker-compose.yml
+  ├── jest.config.json
+  ├── makefile
+  ├── nest-cli.json
+  ├── ormlogs.log
+  ├── package.json
+  ├── src
+  │   ├── app.module.ts
+  │   ├── domain
+  │   │   ├── models
+  │   │   ├── repositories
+  │   │   └── services
+  │   ├── infrastructure
+  │   │   ├── database
+  │   │   ├── modules
+  │   │   └── terminus
+  │   ├── main.ts
+  │   ├── presentation
+  │   │   ├── controllers
+  │   │   ├── errors
+  │   │   └── view-models
+  │   └── usecases
+  │       ├── post.usecase.ts
+  │       └── user.usecase.ts
+  ├── test
+  │   ├── e2e
+  │   │   ├── app.e2e-spec.ts
+  │   │   └── jest-e2e.json
+  │   └── unit
+  │       └── infrastructure
+  ├── tsconfig.build.json
+  ├── tsconfig.json
+  ├── webpack-hmr.config.js
+  └── yarn.lock
+```
