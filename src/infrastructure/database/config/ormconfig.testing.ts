@@ -5,11 +5,11 @@ import { UserEntity } from '../entities/user.entity';
 // Check typeORM documentation for more information.
 const config: ConnectionOptions = {
   type: 'mysql',
-  host: 'mysql_test',
-  port: 3306,
-  username: 'testuser',
-  password: 'password',
-  database: 'mydb_test',
+  host: process.env.DB_HOST_TEST || 'localhost',
+  port: Number(process.env.DB_PORT_TEST) || 3307,
+  username: process.env.DB_USERNAME_TEST || 'testuser',
+  password: process.env.DB_PASSWORD_TEST || 'password',
+  database: process.env.DB_DATABASE_TEST || 'mydb_test',
   synchronize: false,
   entities: [UserEntity, PostEntity],
 

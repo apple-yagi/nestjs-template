@@ -6,15 +6,17 @@ build:
 	docker-compose build
 up:
 	docker-compose up -d
+up-db:
+	docker-compose up -d mysql mysql-test
 down:
 	docker-compose down
 restart:
 	@make down
 	@make up
 migrate:
-	docker exec app yarn migration
+	docker exec app yarn migrate
 migrate-test:
-	docker exec app yarn migration:test
+	docker exec app yarn migrate:test
 migrate-all:
 	@make migrate
 	@make migrate-test
