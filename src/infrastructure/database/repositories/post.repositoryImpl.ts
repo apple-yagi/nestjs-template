@@ -18,6 +18,9 @@ export class PostRepositoryImpl extends BaseRepositoryImpl
   async findById(id: string): Promise<Post | null> {
     const postEntity = await this.manager.findOne(PostEntity, id, {
       relations: ['user'],
+      order: {
+        createdAt: 'DESC',
+      },
     });
 
     if (!postEntity) return null;

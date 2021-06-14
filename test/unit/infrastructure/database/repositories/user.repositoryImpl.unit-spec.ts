@@ -3,7 +3,7 @@ import * as config from 'infrastructure/database/config/ormconfig.testing';
 import { UserEntity } from 'infrastructure/database/entities/user.entity';
 import { UserFactory } from 'infrastructure/database/factories/user.factory';
 import { Connection, createConnection } from 'typeorm';
-import { UserRepositoryImpl } from '../user.repositoryImpl';
+import { UserRepositoryImpl } from 'infrastructure/database/repositories/user.repositoryImpl';
 
 describe('UserRepositoryImpl Database', () => {
   let userRepository: UserRepository;
@@ -14,22 +14,28 @@ describe('UserRepositoryImpl Database', () => {
     userRepository = new UserRepositoryImpl(connection);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await connection.createQueryRunner().manager.query(`DELETE FROM posts`);
     await connection.createQueryRunner().manager.query(`DELETE FROM users`);
+  });
+
+  afterAll(async () => {
     await connection.close();
   });
 
   describe('findAll', () => {
     it('should return an array of users', async () => {
-      const createdUserEntities = await UserFactory.createList(1);
+      const createdUserEntities = await UserFactory.createList(10);
       const expectedUsers = createdUserEntities.map(userEntity =>
         UserEntity.toUser(userEntity),
       );
 
       const actualUsers = await userRepository.findAll();
 
-      expect(actualUsers).toEqual(expectedUsers);
+      expect(actualUsers.length).toBe(expectedUsers.length);
+      expectedUsers.map(expectedUser => {
+        expect(actualUsers).toContainEqual(expectedUser);
+      });
     });
   });
 });

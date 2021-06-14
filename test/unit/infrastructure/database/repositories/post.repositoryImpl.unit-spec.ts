@@ -14,22 +14,28 @@ describe('PostRepositoryImpl Database', () => {
     postRepository = new PostRepositoryImpl(connection);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await connection.createQueryRunner().manager.query(`DELETE FROM posts`);
     await connection.createQueryRunner().manager.query(`DELETE FROM users`);
+  });
+
+  afterAll(async () => {
     await connection.close();
   });
 
   describe('findAll', () => {
     it('should return an array of posts', async () => {
-      const createdPostEntities = await PostFactory.createList(1);
+      const createdPostEntities = await PostFactory.createList(10);
       const expectedPosts = createdPostEntities.map(postEntity =>
         PostEntity.toPost(postEntity),
       );
 
       const actualPosts = await postRepository.findAll();
 
-      expect(actualPosts).toEqual(expectedPosts);
+      expect(actualPosts.length).toBe(expectedPosts.length);
+      expectedPosts.map(expectedPost => {
+        expect(actualPosts).toContainEqual(expectedPost);
+      });
     });
   });
 });
