@@ -22,3 +22,5 @@ migrate-all:
 	@make migrate-test
 unit-test:
 	docker exec app yarn test
+production:
+	docker-compose -f production.yml up -d --build

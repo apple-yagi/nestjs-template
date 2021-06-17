@@ -3,12 +3,10 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: app
     ports:
       - 3000:3000
-    volumes:
-      - ./:/app
     env_file:
       - ./config/.env.develop
     depends_on:
@@ -19,7 +17,7 @@ services:
       - mysql
       - mysql-test
       - redis
-    command: yarn dev
+    command: /app/bin
 
   mysql:
     image: mysql:8.0
